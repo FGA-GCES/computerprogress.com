@@ -1,22 +1,26 @@
 import { Button } from "./styles.js";
 import Link from "next/link";
 
-export default function MyButton({ link, primary, children, ...props }) {
+function PrimitiveButton({ primary, children, ...props }) {
+  return (
+    <Button primary={primary} {...props}>
+      {children}
+    </Button>  
+  )
+}
+
+export default function ButtonComponent({ link, primary, children, ...props }) {
   if (link) {
     return (
       <div>
         <Link href={link || ""}>
-          <Button primary={primary} {...props}>
-            {children}
-          </Button>
+          <PrimitiveButton children={children} primary={primary} {...props} />
         </Link>
       </div>
     );
   }
 
   return (
-    <Button primary={primary} {...props}>
-      {children}
-    </Button>
+    <PrimitiveButton children={children} primary={primary} {...props} />
   );
 }
