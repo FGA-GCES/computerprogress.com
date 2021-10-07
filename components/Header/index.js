@@ -38,8 +38,8 @@ export default function Header({ isHome }) {
 
   const userState = useSelector((state) => state.UserReducer);
 
-  const isMobileXS = useMediaQuery(MuiTheme.breakpoints.down("xs"));
-  const isMobileSM = useMediaQuery(MuiTheme.breakpoints.down("sm"));
+  const isMobileLessOrEqualXS = useMediaQuery(MuiTheme.breakpoints.down("xs"));
+  const isMobileLessOrEqualSM = useMediaQuery(MuiTheme.breakpoints.down("sm"));
 
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
 
@@ -100,7 +100,7 @@ export default function Header({ isHome }) {
       (item) => item.title === "Submit paper"
     );
 
-    newMenuItems[submitPaperMenuIndex].show = isMobileXS;
+    newMenuItems[submitPaperMenuIndex].show = isMobileLessOrEqualXS;
     setMenuItems([...newMenuItems]);
   }
 
@@ -111,14 +111,14 @@ export default function Header({ isHome }) {
       (item) => item.text === "Submit paper"
     );
 
-    newLinks[submitPaperLinksIndex].show = !isMobileXS;
+    newLinks[submitPaperLinksIndex].show = !isMobileLessOrEqualXS;
     setLinks([...newLinks]);
   }
 
   useEffect(() => {
     updateMenuItems();
     updateLinks();
-  }, [isMobileXS]);
+  }, [isMobileLessOrEqualXS]);
 
   function getUserInitials() {
     if (!userState.first_name) {
@@ -146,7 +146,7 @@ export default function Header({ isHome }) {
     setMenuAnchorEl(null);
   }
 
-  function rightEndHeaderContent() {
+  function renderHeaderRightEndContent() {
     if (userState?.role){
       return (
         <>
@@ -230,11 +230,11 @@ export default function Header({ isHome }) {
       <>
         <Box>
           <StyledButton
-            size={isMobileSM ? "small" : "medium"}
+            size={isMobileLessOrEqualSM ? "small" : "medium"}
             color="secondary"
             href="/signup"
           >
-            {isMobileSM ? (
+            {isMobileLessOrEqualSM ? (
               <Box px={1}>Sign up</Box>
             ) : (
               <Box fontSize="0.95rem" px={1}>
@@ -246,7 +246,7 @@ export default function Header({ isHome }) {
 
         <Box>
           <StyledButton size={"medium"} color="primary" href="/signin">
-            {isMobileSM ? (
+            {isMobileLessOrEqualSM ? (
               "Sign in"
             ) : (
               <Box fontSize="0.95rem" px={1}>
@@ -260,7 +260,7 @@ export default function Header({ isHome }) {
   }
 
   return (
-    <StyledAppBar isHome={isHome && !isMobileSM}>
+    <StyledAppBar isHome={isHome && !isMobileLessOrEqualSM}>
       <StyledContainer>
         <Toolbar disableGutters>
           <StyledToolbarBox>
@@ -269,7 +269,7 @@ export default function Header({ isHome }) {
                 <Logo />
               </Box>
 
-              {!isMobileXS && (
+              {!isMobileLessOrEqualXS && (
                 <Typography variant="h6">
                   <StyledBox fontWeight="fontWeightBold">
                     Computer Progress
@@ -280,7 +280,7 @@ export default function Header({ isHome }) {
 
             <StyledSpacer />
 
-            {!isMobileSM && (
+            {!isMobileLessOrEqualSM && (
               <>
                 {links.map(({ text, href }) => (
                   <Box key={href}>
@@ -295,11 +295,11 @@ export default function Header({ isHome }) {
               </>
             )}
 
-            {rightEndHeaderContent()}
+            {renderHeaderRightEndContent()}
           </StyledToolbarBox>
         </Toolbar>
 
-        {isMobileSM && (
+        {isMobileLessOrEqualSM && (
           <Toolbar disableGutters>
             <StyledToolbarBox justifyContent="space-between">
               {links
